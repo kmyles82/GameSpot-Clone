@@ -16,7 +16,8 @@
         @click="action">
             <slot/>
         </div>
-    </div>
+
+        </div>
 </template>
 
 <script>
