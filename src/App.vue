@@ -1,11 +1,10 @@
 <template>
   <div id="app">
-    <comp-header>
-    </comp-header>
-    <div>content</div>
+    <comp-header/>
 
-    <comp-footer>
-    </comp-footer>
+    <router-view></router-view>
+
+    <comp-footer/>
   </div>
 </template> 
 
