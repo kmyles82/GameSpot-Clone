@@ -5,9 +5,13 @@ import store from "./store";
 import VueCarousel from "vue-carousel";
 import Button from "./components/Utils/button";
 import { MdCard } from "vue-material/dist/components";
+import VueResource from "vue-resource";
 
+Vue.use(VueResource);
 Vue.use(MdCard);
 Vue.use(VueCarousel);
+
+Vue.http.options.root = '';
 
 Vue.component("app-button", Button);
 
