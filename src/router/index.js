@@ -1,11 +1,48 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable*/
 /* eslint-disable prettier/prettier */
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from '@/store'
+
 import Home from '@/components/Home/index'
 import SignIn from '@/components/Signin/index'
+import Dashboard from '@/components/Dashboard/index'
 
 Vue.use(VueRouter);
+
+const authGuard = {
+  beforeEnter: (to, from, next) => {
+
+    const redirect = () => {
+      //if user token is set to true
+      if (store.state.admin.token) {
+        //if user is trying to go to signin 
+        if (to.path === '/signin') {
+          next('/dashboard')
+        } else {
+          next()
+        }
+      //if user token is set to false
+      } else {
+        //if user is trying to go to signin 
+        if (to.path === '/signin') {
+          next()
+        } else {
+          next('/')
+        }
+      }
+    }    
+
+    if (store.state.admin.refreshLoading) {
+      //async to watch if refreshLoading value changes
+      store.watch((state, getters) => getters['admin/refreshLoading'], () => {
+        redirect();
+      })
+    } else {
+      redirect();
+    }
+  }
+}
 
 const routes = [
   {
@@ -16,9 +53,19 @@ const routes = [
   {
     path: '/signin',
     name: 'signin',
-    component: SignIn
+    component: SignIn,
+    ...authGuard
+  },
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: Dashboard,
+    ...authGuard,
+    children: []
   }
 ];
+
+
 
 const router = new VueRouter({
   mode: "history",
