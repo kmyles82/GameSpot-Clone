@@ -31,8 +31,33 @@
       </div>
 
       <div class="input_field">
-        <wysiwyg/>
+        <wysiwyg
+          v-model="formdata.content"
+        />
       </div>
+
+      <div 
+        class="input_field"
+        :class="{ invalid: $v.formdata.rating.$error }"
+      >
+        
+        <label>Rating</label>
+        <select
+          v-model="formdata.rating"
+          @blur="$v.formdata.rating.touch()"
+        >
+          <option value="">1</option>
+          <option value="">2</option>
+          <option value="">3</option>
+          <option value="">4</option>
+          <option value="">5</option>
+        </select>
+        <p class="error_label" v-if="$v.formdata.rating.$error">
+          You need to select at least 1
+        </p>
+      </div>
+
+      <button type="submit">Add Post</button>
     </form>
   </div>
 </template>
