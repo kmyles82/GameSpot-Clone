@@ -31,21 +31,12 @@
       </div>
 
       <div class="input_field">
-        <wysiwyg
-          v-model="formdata.content"
-        />
+        <wysiwyg v-model="formdata.content" />
       </div>
 
-      <div 
-        class="input_field"
-        :class="{ invalid: $v.formdata.rating.$error }"
-      >
-        
+      <div class="input_field" :class="{ invalid: $v.formdata.rating.$error }">
         <label>Rating</label>
-        <select
-          v-model="formdata.rating"
-          @blur="$v.formdata.rating.touch()"
-        >
+        <select v-model="formdata.rating" @blur="$v.formdata.rating.$touch()">
           <option value="">1</option>
           <option value="">2</option>
           <option value="">3</option>
@@ -59,10 +50,23 @@
 
       <button type="submit">Add Post</button>
     </form>
+
+    <md-dialog :md-active="dialog">
+      <p>Your post has no content. Are you sure you want to post this?</p>
+      <md-dialog-actions>
+        <md-button class="md-primary" @click="dialogOnCancel">
+          Oops, I want to add it.
+        </md-button>
+        <md-button class="md-primary" @click="dialogOnConfirm">
+          Yes, I am sure.
+        </md-button>
+      </md-dialog-actions>
+    </md-dialog>
   </div>
 </template>
 
 <script>
+// eslint-disable prettier/prettier
 import { required, maxLength } from "vuelidate/lib/validators";
 import wysiwyg from "vue-wysiwyg";
 
@@ -74,7 +78,8 @@ export default {
         desc: "",
         content: "",
         rating: ""
-      }
+      },
+      dialog: false
     };
   },
   validations: {
@@ -84,7 +89,7 @@ export default {
       },
       desc: {
         required,
-        maxLength: maxLength(5)
+        maxLength: maxLength(100)
       },
       rating: {
         required
@@ -92,7 +97,27 @@ export default {
     }
   },
   methods: {
-    submitHandler() {}
+    submitHandler() {
+      if (!this.$v.invalid) {
+        if (this.formdata.content === "") {
+          this.dialog = true
+        } else {
+          this.addPost();
+        }
+      } else {
+        alert("Something is wrong");
+      }
+    },
+    addPost() {
+      console.log('add the post');
+    },
+    dialogOnCancel(){
+      this.dialog = false;
+    },
+    dialogOnConfirm(){
+      this.dialog = false;
+      this.addPost();
+    }
   }
 };
 </script>

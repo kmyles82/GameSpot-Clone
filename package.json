@@ -41,7 +41,7 @@
       "@vue/prettier"
     ],
     "rules": {
-      "no-console": 2,
+      "no-console": "off",
       "no-unused-vars": "off"
     },
     "parserOptions": {

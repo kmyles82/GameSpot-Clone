@@ -5,7 +5,7 @@ import router from "./router/routes";
 import store from "./store";
 import VueCarousel from "vue-carousel";
 import Button from "./components/Utils/button";
-import { MdCard } from "vue-material/dist/components";
+import { MdCard, MdButton, MdDialog, MdContent } from "vue-material/dist/components";
 import "vue-material/dist/vue-material.min.css";
 import VueResource from "vue-resource";
 import Vuelidate from "vuelidate";
@@ -15,6 +15,9 @@ import wysiwyg from 'vue-wysiwyg'
 Vue.use(Vuelidate);
 Vue.use(wysiwyg,{});
 Vue.use(MdCard);
+Vue.use(MdButton);
+Vue.use(MdContent);
+Vue.use(MdDialog);
 Vue.use(VueCarousel);
 
 Vue.use(VueResource);
